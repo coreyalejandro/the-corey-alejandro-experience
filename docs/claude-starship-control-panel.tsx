@@ -1918,7 +1918,7 @@ const ThreeJSBackground = () => {
 
 // Component 51: InteractivePortfolioView - Main 3D portfolio interface
 const InteractivePortfolioView = () => {
-  const [activeSection, setActiveSection] = useState('expertise');
+  const [activeSection, setActiveSection] = useState('industries-and-experiences');
   const [activeExpertise, setActiveExpertise] = useState<string | null>(null);
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -2036,41 +2036,41 @@ const InteractivePortfolioView = () => {
     
     // Navigation commands
     if (command.includes('show expertise')) {
-      setActiveSection('expertise');
+      setActiveSection('industries-and-experiences');
       setActiveExpertise(null); // Reset active expertise when showing main expertise page
     }
     if (command.includes('show education')) {
-      setActiveSection('education');
+      setActiveSection('education-and-certifications');
       setActiveExpertise(null);
     }
     if (command.includes('show projects')) {
-      setActiveSection('projects');
+      setActiveSection('featured-projects');
       setActiveExpertise(null);
     }
     if (command.includes('show skills')) {
-      setActiveSection('skills');
+      setActiveSection('cross-functional-skills');
       setActiveExpertise(null);
     }
     
     // Expertise area commands
     if (command.includes('show instructional design')) {
-      setActiveSection('expertise');
+      setActiveSection('industries-and-experiences');
       setActiveExpertise('isd');
     }
     if (command.includes('show artificial intelligence')) {
-      setActiveSection('expertise');
+      setActiveSection('industries-and-experiences');
       setActiveExpertise('ai');
     }
     if (command.includes('show data science')) {
-      setActiveSection('expertise');
+      setActiveSection('industries-and-experiences');
       setActiveExpertise('data-science');
     }
     if (command.includes('show machine learning')) {
-      setActiveSection('expertise');
+      setActiveSection('industries-and-experiences');
       setActiveExpertise('ml');
     }
     if (command.includes('show full stack')) {
-      setActiveSection('expertise');
+      setActiveSection('industries-and-experiences');
       setActiveExpertise('fullstack');
     }
     
@@ -2081,7 +2081,7 @@ const InteractivePortfolioView = () => {
         e.name.toLowerCase().includes(area.toLowerCase())
       );
       if (expertise) {
-        setActiveSection('projects');
+        setActiveSection('featured-projects');
         setActiveExpertise(expertise.id);
       }
     }
@@ -2092,7 +2092,7 @@ const InteractivePortfolioView = () => {
         e.name.toLowerCase().includes(area.toLowerCase())
       );
       if (expertise) {
-        setActiveSection('skills');
+        setActiveSection('cross-functional-skills');
         setActiveExpertise(expertise.id);
       }
     }
@@ -2157,7 +2157,15 @@ const InteractivePortfolioView = () => {
           </div>
 
           <nav className="space-y-2">
-            {['expertise', 'education', 'projects', 'skills'].map(section => (
+            {[
+              'industries-and-experiences',
+              'education-and-certifications',
+              'cross-functional-skills',
+              'featured-projects',
+              'resume',
+              'contact',
+              'about'
+            ].map(section => (
               <button
                 key={section}
                 className={`w-full text-left px-4 py-2 rounded transition-all ${
@@ -2180,7 +2188,13 @@ const InteractivePortfolioView = () => {
                   setActiveExpertise(null); // Reset active expertise when switching tabs
                 }}
               >
-                {section.charAt(0).toUpperCase() + section.slice(1)}
+                {section === 'education-and-certifications' ? 'Education and Certifications' :
+                 section === 'industries-and-experiences' ? 'Industries and Experiences' :
+                 section === 'cross-functional-skills' ? 'Cross-functional Skills' :
+                 section === 'featured-projects' ? 'Featured Projects' :
+                 section === 'resume' ? 'Resume' :
+                 section === 'contact' ? 'Contact' :
+                 'About'}
               </button>
             ))}
           </nav>
@@ -2232,20 +2246,28 @@ const InteractivePortfolioView = () => {
           {/* Page Title */}
           <div className="mb-8">
             <h1 className="text-2xl font-bold tracking-wide" style={{ color: theme.colors.textPrimary }}>
-              {activeSection === 'expertise' ? '' :
-               activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}
+              {activeSection === 'education-and-certifications' ? 'Education and Certifications' :
+               activeSection === 'industries-and-experiences' ? 'Industries and Experiences' :
+               activeSection === 'cross-functional-skills' ? 'Cross-functional Skills' :
+               activeSection === 'featured-projects' ? 'Featured Projects' :
+               activeSection === 'resume' ? 'Resume' :
+               activeSection === 'contact' ? 'Contact' :
+               'About'}
             </h1>
             <p className="text-sm" style={{ color: theme.colors.textSecondary }}>
-              {activeSection === 'expertise' ? '' :
-               activeSection === 'education' ? 'Academic background and certifications' :
-               activeSection === 'projects' ? 'Featured projects and work' :
-               'Technical skills and proficiencies'}
+              {activeSection === 'industries-and-experiences' ? 'Professional expertise and work experience' :
+               activeSection === 'education-and-certifications' ? 'Academic background and professional certifications' :
+               activeSection === 'cross-functional-skills' ? 'Technical and soft skills across disciplines' :
+               activeSection === 'featured-projects' ? 'Highlighted projects and achievements' :
+               activeSection === 'resume' ? 'Complete professional history' :
+               activeSection === 'contact' ? 'Get in touch' :
+               'About me and my journey'}
             </p>
           </div>
 
           {/* Content Display */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {activeSection === 'expertise' && (
+            {activeSection === 'industries-and-experiences' && (
               activeExpertise ? (
                 // Show specific expertise area
                 EXPERTISE_AREAS.find(e => e.id === activeExpertise) && (
@@ -2410,10 +2432,10 @@ const InteractivePortfolioView = () => {
               )
             )}
 
-            {activeSection === 'education' && (
+            {activeSection === 'education-and-certifications' && (
               <div className="col-span-full">
                 <h2 className="text-2xl font-bold tracking-wide mb-8" style={{ color: theme.colors.textPrimary }}>
-                  Education & Certifications
+                  Education and Certifications
                 </h2>
                 
                 <div className="mb-8">
@@ -2457,7 +2479,7 @@ const InteractivePortfolioView = () => {
               </div>
             )}
 
-            {activeSection === 'projects' && (
+            {activeSection === 'featured-projects' && (
               <>
                 <div className="col-span-full mb-8">
                   <h2 className="text-2xl font-bold tracking-wide" style={{ color: theme.colors.textPrimary }}>
@@ -2528,7 +2550,7 @@ const InteractivePortfolioView = () => {
               </>
             )}
 
-            {activeSection === 'skills' && (
+            {activeSection === 'cross-functional-skills' && (
               <>
                 <div className="col-span-full mb-8">
                   <h2 className="text-2xl font-bold tracking-wide" style={{ color: theme.colors.textPrimary }}>
@@ -2578,7 +2600,13 @@ const Breadcrumbs = ({ activeSection, activeExpertise, setActiveExpertise }) => 
 
     if (activeSection) {
       crumbs.push({
-        label: activeSection.charAt(0).toUpperCase() + activeSection.slice(1),
+        label: activeSection === 'education-and-certifications' ? 'Education and Certifications' :
+               activeSection === 'industries-and-experiences' ? 'Industries and Experiences' :
+               activeSection === 'cross-functional-skills' ? 'Cross-functional Skills' :
+               activeSection === 'featured-projects' ? 'Featured Projects' :
+               activeSection === 'resume' ? 'Resume' :
+               activeSection === 'contact' ? 'Contact' :
+               'About',
         onClick: activeExpertise ? () => setActiveExpertise(null) : null
       });
     }
